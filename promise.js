@@ -22,12 +22,20 @@ const myQuizPromise = new Promise((resolve, reject)=> {
     }
 
 });
-
-
     
 myQuizPromise
         .then((message)=>{
         console.log(message);
+        return fetch('https://api.adviceslip.com/advice');  //fetching random advice from Advice SIP API
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        console.log("Here's some advice for you: " + data.slip.advice);
     })
         .catch((error)=>{
         console.log("Error:" + error
